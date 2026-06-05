@@ -14,6 +14,11 @@ https://www.amazon.ca/dp/B0D2NMCY7K
 
 https://openpilab.github.io/PiLab-Panel/webflasher/
 
+###  Single File Online demo of Web UI
+
+Try out the Web UI to see how easy it is to build your own Screens
+https://openpilab.github.io/PiLab-Panel/docs/pilab_panel_single_file_demo.html
+
 ## Current baseline
 
 - clean boot on the Waveshare ESP32-S3 7-inch panel
