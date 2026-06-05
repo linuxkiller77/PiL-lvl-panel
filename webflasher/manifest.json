@@ -1,0 +1,24 @@
+{
+  "name": "PiLab Panel Firmware",
+  "version": "v6.45.41-s3-lvgl-runtime-rollback-stable",
+  "new_install_prompt_erase": true,
+  "builds": [
+    {
+      "chipFamily": "ESP32-S3",
+      "parts": [
+        {
+          "path": "firmware/bootloader.bin",
+          "offset": 0
+        },
+        {
+          "path": "firmware/partition-table.bin",
+          "offset": 32768
+        },
+        {
+          "path": "firmware/PiLab_Panel.bin",
+          "offset": 65536
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "name": "pilab-panel-web",
+  "version": "0.4.7",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build && node tools/inline-dist.mjs",
+    "embed": "python ../tools/embed_web_assets.py dist/panel.html ../main/web/panel_web_assets.c"
+  },
+  "dependencies": {
+    "@vitejs/plugin-vue": "latest",
+    "vite": "latest",
+    "vue": "latest",
+    "prismjs": "latest",
+    "prism-code-editor-lightweight": "^0.0.3"
+  },
+  "devDependencies": {}
+}

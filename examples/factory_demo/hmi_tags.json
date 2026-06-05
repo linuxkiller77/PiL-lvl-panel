@@ -1,0 +1,167 @@
+{
+  "tags": [
+    {
+      "name": "Factory_Title",
+      "type": "string",
+      "initialValue": "PiLab Panel S3 Factory Demo",
+      "writable": true,
+      "description": "Main factory demo title"
+    },
+    {
+      "name": "Script_Status",
+      "type": "string",
+      "initialValue": "Factory demo booting...",
+      "writable": true,
+      "description": "Text status written by AngelScript"
+    },
+    {
+      "name": "Run_Command",
+      "type": "bool",
+      "initialValue": false,
+      "writable": true,
+      "description": "Start/stop command"
+    },
+    {
+      "name": "Motor_Running",
+      "type": "bool",
+      "initialValue": false,
+      "writable": true,
+      "description": "Motor running indicator"
+    },
+    {
+      "name": "Pump_Enable",
+      "type": "bool",
+      "initialValue": false,
+      "writable": true,
+      "description": "Pump output indicator"
+    },
+    {
+      "name": "Valve_Open",
+      "type": "bool",
+      "initialValue": false,
+      "writable": true,
+      "description": "Valve output indicator"
+    },
+    {
+      "name": "Fault_Active",
+      "type": "bool",
+      "initialValue": false,
+      "writable": true,
+      "description": "Demo alarm indicator"
+    },
+    {
+      "name": "Auto_Mode",
+      "type": "bool",
+      "initialValue": true,
+      "writable": true,
+      "description": "Auto/manual toggle"
+    },
+    {
+      "name": "Panel_Heartbeat",
+      "type": "bool",
+      "initialValue": false,
+      "writable": false,
+      "description": "Firmware heartbeat"
+    },
+    {
+      "name": "Panel_Uptime_s",
+      "type": "float",
+      "initialValue": 0,
+      "units": "s",
+      "min": 0,
+      "max": 1000000,
+      "writable": false,
+      "description": "Firmware uptime seconds"
+    },
+    {
+      "name": "Motor_Speed_SP",
+      "type": "float",
+      "initialValue": 1200,
+      "units": "rpm",
+      "min": 0,
+      "max": 5000,
+      "writable": true,
+      "description": "Motor speed setpoint"
+    },
+    {
+      "name": "Motor_Speed_PV",
+      "type": "float",
+      "initialValue": 0,
+      "units": "rpm",
+      "min": 0,
+      "max": 5000,
+      "writable": true,
+      "description": "Motor speed process value"
+    },
+    {
+      "name": "Tank_Level_SP",
+      "type": "float",
+      "initialValue": 55,
+      "units": "%",
+      "min": 0,
+      "max": 100,
+      "writable": true,
+      "description": "Tank level setpoint"
+    },
+    {
+      "name": "Tank_Level",
+      "type": "float",
+      "initialValue": 45,
+      "units": "%",
+      "min": 0,
+      "max": 100,
+      "writable": true,
+      "description": "Tank level process value"
+    },
+    {
+      "name": "Temp_SP",
+      "type": "float",
+      "initialValue": 32,
+      "units": "C",
+      "min": 0,
+      "max": 100,
+      "writable": true,
+      "description": "Temperature setpoint"
+    },
+    {
+      "name": "Temp_PV",
+      "type": "float",
+      "initialValue": 24,
+      "units": "C",
+      "min": 0,
+      "max": 100,
+      "writable": true,
+      "description": "Temperature process value"
+    },
+    {
+      "name": "Flow_PV",
+      "type": "float",
+      "initialValue": 0,
+      "units": "L/min",
+      "min": 0,
+      "max": 100,
+      "writable": true,
+      "description": "Flow process value"
+    },
+    {
+      "name": "Pressure_PV",
+      "type": "float",
+      "initialValue": 20,
+      "units": "kPa",
+      "min": 0,
+      "max": 500,
+      "writable": true,
+      "description": "Pressure process value"
+    },
+    {
+      "name": "Batch_Count",
+      "type": "float",
+      "initialValue": 1,
+      "units": "",
+      "min": 0,
+      "max": 9999,
+      "writable": true,
+      "description": "Demo batch counter"
+    }
+  ]
+}

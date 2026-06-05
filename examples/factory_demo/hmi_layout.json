@@ -1,0 +1,615 @@
+{
+  "version": 2,
+  "startupPage": "Main",
+  "screen": {
+    "width": 800,
+    "height": 480,
+    "background": "#101828"
+  },
+  "pages": [
+    {
+      "id": "Main",
+      "name": "Main",
+      "widgets": [
+        {
+          "id": "title",
+          "type": "label",
+          "x": 20,
+          "y": 14,
+          "w": 430,
+          "h": 42,
+          "props": {
+            "label": "PiLab Panel S3 Factory Demo",
+            "pin": "Factory_Title",
+            "color": "#FFFFFF",
+            "fontSize": 28
+          }
+        },
+        {
+          "id": "heartbeat",
+          "type": "led",
+          "x": 714,
+          "y": 14,
+          "w": 66,
+          "h": 70,
+          "props": {
+            "label": "HB",
+            "pin": "Panel_Heartbeat",
+            "color": "#22C55E"
+          }
+        },
+        {
+          "id": "status",
+          "type": "label",
+          "x": 24,
+          "y": 62,
+          "w": 560,
+          "h": 36,
+          "props": {
+            "label": "Status",
+            "pin": "Script_Status",
+            "color": "#FACC15",
+            "fontSize": 21
+          }
+        },
+        {
+          "id": "start_stop",
+          "type": "button",
+          "x": 30,
+          "y": 118,
+          "w": 164,
+          "h": 72,
+          "events": {
+            "onClick": "StartStop_Click"
+          },
+          "props": {
+            "label": "START / STOP",
+            "pin": "Run_Command",
+            "buttonMode": "script",
+            "color": "#0EA5E9"
+          }
+        },
+        {
+          "id": "stop",
+          "type": "button",
+          "x": 210,
+          "y": 118,
+          "w": 112,
+          "h": 72,
+          "events": {
+            "onClick": "Stop_Click"
+          },
+          "props": {
+            "label": "STOP",
+            "pin": "Run_Command",
+            "buttonMode": "script",
+            "color": "#EF4444"
+          }
+        },
+        {
+          "id": "motor_led",
+          "type": "led",
+          "x": 348,
+          "y": 112,
+          "w": 112,
+          "h": 88,
+          "props": {
+            "label": "Motor",
+            "pin": "Motor_Running",
+            "color": "#22C55E"
+          }
+        },
+        {
+          "id": "pump_led",
+          "type": "led",
+          "x": 478,
+          "y": 112,
+          "w": 112,
+          "h": 88,
+          "props": {
+            "label": "Pump",
+            "pin": "Pump_Enable",
+            "color": "#38BDF8"
+          }
+        },
+        {
+          "id": "speed_pv",
+          "type": "readout",
+          "x": 610,
+          "y": 112,
+          "w": 160,
+          "h": 88,
+          "props": {
+            "label": "Speed PV",
+            "pin": "Motor_Speed_PV",
+            "unit": " rpm",
+            "decimals": 0,
+            "min": 0,
+            "max": 5000,
+            "color": "#38BDF8"
+          }
+        },
+        {
+          "id": "speed_sp",
+          "type": "setpoint",
+          "x": 30,
+          "y": 222,
+          "w": 180,
+          "h": 96,
+          "events": {
+            "onChange": "SpeedSetpoint_Changed"
+          },
+          "props": {
+            "label": "Speed SP",
+            "pin": "Motor_Speed_SP",
+            "unit": " rpm",
+            "min": 0,
+            "max": 5000,
+            "step": 1,
+            "decimals": 0,
+            "color": "#F97316"
+          }
+        },
+        {
+          "id": "auto_toggle",
+          "type": "toggle",
+          "x": 232,
+          "y": 226,
+          "w": 150,
+          "h": 86,
+          "events": {
+            "onChange": "AutoMode_Changed"
+          },
+          "props": {
+            "label": "Auto",
+            "pin": "Auto_Mode",
+            "color": "#A78BFA"
+          }
+        },
+        {
+          "id": "fault_led",
+          "type": "led",
+          "x": 405,
+          "y": 222,
+          "w": 110,
+          "h": 92,
+          "props": {
+            "label": "Fault",
+            "pin": "Fault_Active",
+            "color": "#F43F5E"
+          }
+        },
+        {
+          "id": "temp_pv",
+          "type": "readout",
+          "x": 540,
+          "y": 222,
+          "w": 110,
+          "h": 92,
+          "props": {
+            "label": "Temp",
+            "pin": "Temp_PV",
+            "unit": " C",
+            "decimals": 1,
+            "min": 0,
+            "max": 100,
+            "color": "#F59E0B"
+          }
+        },
+        {
+          "id": "uptime",
+          "type": "readout",
+          "x": 668,
+          "y": 222,
+          "w": 104,
+          "h": 92,
+          "props": {
+            "label": "Uptime",
+            "pin": "Panel_Uptime_s",
+            "unit": " s",
+            "decimals": 0,
+            "min": 0,
+            "max": 1000000,
+            "color": "#CBD5E1"
+          }
+        },
+        {
+          "id": "to_process",
+          "type": "button",
+          "x": 30,
+          "y": 350,
+          "w": 150,
+          "h": 58,
+          "events": {
+            "onClick": "ProcessPage_Click"
+          },
+          "props": {
+            "label": "PROCESS",
+            "buttonMode": "script",
+            "color": "#16A34A"
+          }
+        },
+        {
+          "id": "to_diag",
+          "type": "button",
+          "x": 200,
+          "y": 350,
+          "w": 150,
+          "h": 58,
+          "events": {
+            "onClick": "DiagnosticsPage_Click"
+          },
+          "props": {
+            "label": "DIAG",
+            "buttonMode": "script",
+            "color": "#64748B"
+          }
+        },
+        {
+          "id": "alarm_reset",
+          "type": "button",
+          "x": 370,
+          "y": 350,
+          "w": 166,
+          "h": 58,
+          "events": {
+            "onClick": "AlarmReset_Click"
+          },
+          "props": {
+            "label": "RESET ALARM",
+            "buttonMode": "script",
+            "color": "#7C3AED"
+          }
+        },
+        {
+          "id": "note",
+          "type": "label",
+          "x": 555,
+          "y": 348,
+          "w": 222,
+          "h": 62,
+          "props": {
+            "label": "Tap setpoints for numeric keypad.",
+            "color": "#94A3B8",
+            "fontSize": 17
+          }
+        }
+      ]
+    },
+    {
+      "id": "Process",
+      "name": "Process",
+      "widgets": [
+        {
+          "id": "process_title",
+          "type": "label",
+          "x": 24,
+          "y": 14,
+          "w": 360,
+          "h": 42,
+          "props": {
+            "label": "Process View",
+            "color": "#FFFFFF",
+            "fontSize": 28
+          }
+        },
+        {
+          "id": "status2",
+          "type": "label",
+          "x": 24,
+          "y": 62,
+          "w": 520,
+          "h": 34,
+          "props": {
+            "label": "Status",
+            "pin": "Script_Status",
+            "color": "#FACC15",
+            "fontSize": 20
+          }
+        },
+        {
+          "id": "tank",
+          "type": "tank",
+          "x": 38,
+          "y": 115,
+          "w": 160,
+          "h": 250,
+          "props": {
+            "label": "Tank",
+            "pin": "Tank_Level",
+            "unit": " %",
+            "min": 0,
+            "max": 100,
+            "decimals": 0,
+            "color": "#06B6D4"
+          }
+        },
+        {
+          "id": "level_sp",
+          "type": "setpoint",
+          "x": 226,
+          "y": 120,
+          "w": 170,
+          "h": 94,
+          "events": {
+            "onChange": "LevelSetpoint_Changed"
+          },
+          "props": {
+            "label": "Level SP",
+            "pin": "Tank_Level_SP",
+            "unit": " %",
+            "min": 0,
+            "max": 100,
+            "step": 5,
+            "decimals": 0,
+            "color": "#22C55E"
+          }
+        },
+        {
+          "id": "flow",
+          "type": "gauge",
+          "x": 226,
+          "y": 245,
+          "w": 210,
+          "h": 100,
+          "props": {
+            "label": "Flow",
+            "pin": "Flow_PV",
+            "unit": " L/min",
+            "min": 0,
+            "max": 100,
+            "decimals": 1,
+            "color": "#38BDF8"
+          }
+        },
+        {
+          "id": "pressure",
+          "type": "gauge",
+          "x": 462,
+          "y": 120,
+          "w": 210,
+          "h": 100,
+          "props": {
+            "label": "Pressure",
+            "pin": "Pressure_PV",
+            "unit": " kPa",
+            "min": 0,
+            "max": 500,
+            "decimals": 0,
+            "color": "#A78BFA"
+          }
+        },
+        {
+          "id": "temp_sp",
+          "type": "setpoint",
+          "x": 462,
+          "y": 245,
+          "w": 170,
+          "h": 94,
+          "events": {
+            "onChange": "TempSetpoint_Changed"
+          },
+          "props": {
+            "label": "Temp SP",
+            "pin": "Temp_SP",
+            "unit": " C",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "decimals": 0,
+            "color": "#F97316"
+          }
+        },
+        {
+          "id": "valve",
+          "type": "led",
+          "x": 670,
+          "y": 120,
+          "w": 92,
+          "h": 88,
+          "props": {
+            "label": "Valve",
+            "pin": "Valve_Open",
+            "color": "#22C55E"
+          }
+        },
+        {
+          "id": "batch",
+          "type": "readout",
+          "x": 670,
+          "y": 245,
+          "w": 92,
+          "h": 94,
+          "props": {
+            "label": "Batch",
+            "pin": "Batch_Count",
+            "unit": "",
+            "min": 0,
+            "max": 9999,
+            "decimals": 0,
+            "color": "#FACC15"
+          }
+        },
+        {
+          "id": "main_btn",
+          "type": "button",
+          "x": 36,
+          "y": 392,
+          "w": 150,
+          "h": 58,
+          "events": {
+            "onClick": "MainPage_Click"
+          },
+          "props": {
+            "label": "MAIN",
+            "buttonMode": "script",
+            "color": "#0EA5E9"
+          }
+        },
+        {
+          "id": "diag_btn",
+          "type": "button",
+          "x": 206,
+          "y": 392,
+          "w": 150,
+          "h": 58,
+          "events": {
+            "onClick": "DiagnosticsPage_Click"
+          },
+          "props": {
+            "label": "DIAG",
+            "buttonMode": "script",
+            "color": "#64748B"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Diagnostics",
+      "name": "Diagnostics",
+      "widgets": [
+        {
+          "id": "diag_title",
+          "type": "label",
+          "x": 24,
+          "y": 18,
+          "w": 420,
+          "h": 42,
+          "props": {
+            "label": "Diagnostics / Runtime",
+            "color": "#FFFFFF",
+            "fontSize": 28
+          }
+        },
+        {
+          "id": "diag_status",
+          "type": "label",
+          "x": 24,
+          "y": 68,
+          "w": 610,
+          "h": 34,
+          "props": {
+            "label": "Status",
+            "pin": "Script_Status",
+            "color": "#FACC15",
+            "fontSize": 19
+          }
+        },
+        {
+          "id": "heartbeat_diag",
+          "type": "led",
+          "x": 688,
+          "y": 20,
+          "w": 72,
+          "h": 76,
+          "props": {
+            "label": "HB",
+            "pin": "Panel_Heartbeat",
+            "color": "#22C55E"
+          }
+        },
+        {
+          "id": "uptime_diag",
+          "type": "readout",
+          "x": 35,
+          "y": 128,
+          "w": 150,
+          "h": 90,
+          "props": {
+            "label": "Uptime",
+            "pin": "Panel_Uptime_s",
+            "unit": " s",
+            "decimals": 0,
+            "min": 0,
+            "max": 1000000,
+            "color": "#CBD5E1"
+          }
+        },
+        {
+          "id": "tag_count_label",
+          "type": "label",
+          "x": 220,
+          "y": 130,
+          "w": 270,
+          "h": 74,
+          "props": {
+            "label": "Tags, layout, and scripts can be saved to RAM or Flash from the browser.",
+            "color": "#CBD5E1",
+            "fontSize": 17
+          }
+        },
+        {
+          "id": "run_diag",
+          "type": "led",
+          "x": 520,
+          "y": 128,
+          "w": 102,
+          "h": 90,
+          "props": {
+            "label": "Run",
+            "pin": "Motor_Running",
+            "color": "#22C55E"
+          }
+        },
+        {
+          "id": "fault_diag",
+          "type": "led",
+          "x": 650,
+          "y": 128,
+          "w": 102,
+          "h": 90,
+          "props": {
+            "label": "Fault",
+            "pin": "Fault_Active",
+            "color": "#F43F5E"
+          }
+        },
+        {
+          "id": "memory_note",
+          "type": "label",
+          "x": 38,
+          "y": 250,
+          "w": 690,
+          "h": 74,
+          "props": {
+            "label": "Open http://192.168.4.1 after joining WiFi SSID PiLab-Panel. Use Load from LCD to pull the running demo into the browser editor.",
+            "color": "#94A3B8",
+            "fontSize": 18
+          }
+        },
+        {
+          "id": "main_btn2",
+          "type": "button",
+          "x": 36,
+          "y": 374,
+          "w": 150,
+          "h": 58,
+          "events": {
+            "onClick": "MainPage_Click"
+          },
+          "props": {
+            "label": "MAIN",
+            "buttonMode": "script",
+            "color": "#0EA5E9"
+          }
+        },
+        {
+          "id": "process_btn2",
+          "type": "button",
+          "x": 206,
+          "y": 374,
+          "w": 150,
+          "h": 58,
+          "events": {
+            "onClick": "ProcessPage_Click"
+          },
+          "props": {
+            "label": "PROCESS",
+            "buttonMode": "script",
+            "color": "#16A34A"
+          }
+        }
+      ]
+    }
+  ]
+}
