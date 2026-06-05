@@ -7,6 +7,13 @@ The important idea is that the web page is the editor, while the microcontroller
 
 Development of this project was done in co-op with AI.
 
+###  Web flasher for PiLab Panel
+
+Only this specific Waveshare ESP32-S3 7" LCD board has been tested
+https://www.amazon.ca/dp/B0D2NMCY7K
+
+https://openpilab.github.io/PiLab-Panel/webflasher/
+
 ## Current baseline
 
 - clean boot on the Waveshare ESP32-S3 7-inch panel
