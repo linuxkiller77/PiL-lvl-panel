@@ -179,6 +179,42 @@
       margin-bottom: 3px;
     }
 
+
+    .flash-choice-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .flash-choice-card {
+      border: 1px solid rgba(148, 163, 184, 0.28);
+      border-radius: 18px;
+      padding: 1rem;
+      background: rgba(15, 23, 42, 0.55);
+    }
+
+    .flash-choice-card h3 {
+      margin: 0 0 0.35rem;
+      color: #e5f6ff;
+      font-size: 1.05rem;
+    }
+
+    .flash-choice-card p {
+      margin: 0 0 0.85rem;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .flash-warning {
+      border-left: 4px solid #facc15;
+      background: rgba(250, 204, 21, 0.10);
+      color: #fef3c7;
+      padding: 0.8rem 1rem;
+      border-radius: 14px;
+      margin: 1rem 0;
+    }
+
     @media (max-width: 820px) {
       .wrap { padding: 28px 0; }
       .grid { grid-template-columns: 1fr; }
@@ -246,14 +282,37 @@
           Chrome, Edge, or Brave. Click the install button and select the board serial port.
         </p>
 
-        <div class="button-row">
-          <esp-web-install-button manifest="manifest.json">
-            <button class="primary" slot="activate">Install PiLab Panel Firmware</button>
-            <span slot="unsupported"><button class="secondary" disabled>Browser not supported</button></span>
-            <span slot="not-allowed"><button class="secondary" disabled>HTTPS required</button></span>
-          </esp-web-install-button>
+        <div class="flash-warning">
+          Choose the firmware that matches your board flash size. If the serial monitor shows
+          <code>Detected size(8192k) smaller than ... header(16384k)</code>, use the 8MB flash version.
+        </div>
 
-          <a class="link-button secondary" href="manifest.json" target="_blank" rel="noreferrer">View manifest</a>
+        <div class="flash-choice-list">
+          <div class="flash-choice-card">
+            <h3>8MB Flash / 8MB PSRAM</h3>
+            <p>Use this for newer Waveshare ESP32-S3-Touch-LCD-7 boards that report 8MB flash.</p>
+            <div class="button-row">
+              <esp-web-install-button manifest="manifest_8mb.json">
+                <button class="primary" slot="activate">Install 8MB Flash Version</button>
+                <span slot="unsupported"><button class="secondary" disabled>Browser not supported</button></span>
+                <span slot="not-allowed"><button class="secondary" disabled>HTTPS required</button></span>
+              </esp-web-install-button>
+              <a class="link-button secondary" href="manifest_8mb.json" target="_blank" rel="noreferrer">View 8MB manifest</a>
+            </div>
+          </div>
+
+          <div class="flash-choice-card">
+            <h3>16MB Flash / 8MB PSRAM</h3>
+            <p>Use this for original ESP32-S3N16R8 boards that report 16MB flash.</p>
+            <div class="button-row">
+              <esp-web-install-button manifest="manifest_16mb.json">
+                <button class="primary" slot="activate">Install 16MB Flash Version</button>
+                <span slot="unsupported"><button class="secondary" disabled>Browser not supported</button></span>
+                <span slot="not-allowed"><button class="secondary" disabled>HTTPS required</button></span>
+              </esp-web-install-button>
+              <a class="link-button secondary" href="manifest_16mb.json" target="_blank" rel="noreferrer">View 16MB manifest</a>
+            </div>
+          </div>
         </div>
 
         <div id="browserWarning" class="browser-warning">

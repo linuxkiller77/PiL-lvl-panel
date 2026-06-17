@@ -50,12 +50,29 @@ The local tag database is the normalization layer. Future drivers such as PiLink
 Primary target:
 
 - Waveshare ESP32-S3 7-inch RGB LCD touch panel
-- ESP32-S3 with PSRAM, commonly the N16R8-style configuration
+- ESP32-S3 with PSRAM
 - 800x480 RGB LCD
 - GT911 touch controller
 - CH422G I/O expander used by the Waveshare board
 
 The firmware is not a generic ESP32-S3 display project. It contains board-specific display, touch, reset, and backlight handling for this Waveshare panel.
+
+### Flash / PSRAM variants
+
+The Waveshare ESP32-S3 7-inch LCD board appears to exist in at least two memory configurations:
+
+- 16MB Flash / 8MB PSRAM
+- 8MB Flash / 8MB PSRAM
+
+Both variants use the same PiLab Panel source code, but they require different ESP-IDF flash-size settings and different partition tables.
+
+If the wrong firmware is flashed, the install may appear to complete, but the board can reboot before Wi-Fi starts. A typical monitor message for flashing the 16MB firmware onto an 8MB board is:
+
+```text
+Detected size(8192k) smaller than the size in the binary image header(16384k)
+```
+
+If you see that message, build or flash the 8MB variant.
 
 ## Repository layout
 
@@ -73,7 +90,17 @@ panel_web/
   tools/               Web build helper scripts
 
 tools/
-  embed_web_assets.py  Converts built HTML into C source for firmware embedding
+  embed_web_assets.py      Converts built HTML into C source for firmware embedding
+  build_8mb.ps1           Builds the 8MB flash variant
+  build_16mb.ps1          Builds the 16MB flash variant
+  copyFirmware.ps1        Copies built firmware into the web flasher folder
+
+webflasher/
+  index.html              ESP Web Tools browser flasher page
+  manifest_8mb.json       Web flasher manifest for 8MB flash boards
+  manifest_16mb.json      Web flasher manifest for 16MB flash boards
+  firmware/8mb/           8MB build output copied here for GitHub Pages
+  firmware/16mb/          16MB build output copied here for GitHub Pages
 
 docs/
   Architecture, build, validation, diagnostics, and contributor notes
@@ -81,15 +108,35 @@ docs/
 
 ## Quick start
 
-### Build firmware only
+### 1. Set the ESP-IDF target
+
+Run this once after cloning or unpacking the project:
 
 ```bash
 idf.py set-target esp32s3
-idf.py build
-idf.py flash monitor
 ```
 
-### Connect to the panel
+### 2. Choose the correct flash variant
+
+PiLab Panel now supports separate 8MB and 16MB flash builds.
+
+Use the 16MB build for original Waveshare ESP32-S3N16R8-style boards:
+
+```bash
+idf.py -B build_16mb -DPILAB_FLASH_SIZE=16MB build
+idf.py -B build_16mb flash monitor
+```
+
+Use the 8MB build for Waveshare boards that report 8MB flash:
+
+```bash
+idf.py -B build_8mb -DPILAB_FLASH_SIZE=8MB build
+idf.py -B build_8mb flash monitor
+```
+
+The `-B` option keeps each variant in a separate build folder. This is important because ESP-IDF stores the selected sdkconfig in the build directory.
+
+### 3. Connect to the panel
 
 After flashing, connect a PC, tablet, or phone to:
 
@@ -99,7 +146,15 @@ Password: pilabpanel
 URL:      http://192.168.4.1
 ```
 
+If the panel has been configured to join your Wi-Fi network, it may also be reachable by mDNS:
+
+```text
+http://pilab-panel.local
+```
+
 ### Rebuild the web editor and firmware
+
+The zip intentionally does not include `node_modules`. To rebuild the browser editor and embed it into the ESP32 firmware:
 
 ```bash
 cd panel_web
@@ -107,11 +162,60 @@ npm install
 npm run build
 npm run embed
 cd ..
-idf.py build
-idf.py flash monitor
 ```
 
-The zip intentionally does not include `node_modules`.
+Then build the firmware variant you need:
+
+```bash
+idf.py -B build_16mb -DPILAB_FLASH_SIZE=16MB build
+```
+
+or:
+
+```bash
+idf.py -B build_8mb -DPILAB_FLASH_SIZE=8MB build
+```
+
+## Flash variant files
+
+The project uses these files for the two hardware variants:
+
+```text
+sdkconfig.defaults.common
+sdkconfig.defaults.16mb
+sdkconfig.defaults.8mb
+partitions_16mb.csv
+partitions_8mb.csv
+```
+
+`CMakeLists.txt` selects the correct sdkconfig defaults from the `PILAB_FLASH_SIZE` option.
+
+The default is still 16MB if no option is provided.
+
+## Updating the web flasher firmware files
+
+After building a firmware variant, copy the generated ESP-IDF binaries into the `webflasher` folder.
+
+For the 16MB variant:
+
+```powershell
+.\tools\copyFirmware.ps1 -Variant 16mb -BuildDir build_16mb
+```
+
+For the 8MB variant:
+
+```powershell
+.\tools\copyFirmware.ps1 -Variant 8mb -BuildDir build_8mb
+```
+
+The web flasher has two manifests:
+
+```text
+webflasher/manifest_16mb.json
+webflasher/manifest_8mb.json
+```
+
+The GitHub Pages web flasher page provides separate install buttons for the 8MB and 16MB firmware builds.
 
 ## Main documentation
 
@@ -119,6 +223,7 @@ Start with these files:
 
 - [`docs/USER_GUIDE.md`](docs/USER_GUIDE.md)
 - [`docs/BUILD_AND_FLASH.md`](docs/BUILD_AND_FLASH.md)
+- [`README_FLASH_VARIANTS.md`](README_FLASH_VARIANTS.md)
 - [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)
 - [`docs/RUNTIME_LIFECYCLE.md`](docs/RUNTIME_LIFECYCLE.md)
 - [`docs/DIAGNOSTICS.md`](docs/DIAGNOSTICS.md)

@@ -40,9 +40,3 @@ CONFIG_FREERTOS_TASK_CREATE_ALLOW_EXT_MEM=y
 # Diagnostic LVGL build testing: keep the task watchdog enabled, but wait longer
 # before panic so large staged screen builds can prove whether they complete.
 CONFIG_ESP_TASK_WDT_TIMEOUT_S=10
-# PiLab Panel ESP32-S3 16MB flash variant
-# For Waveshare ESP32-S3-Touch-LCD-7 boards that report 16MB flash.
-CONFIG_ESPTOOLPY_FLASHSIZE_16MB=y
-CONFIG_PARTITION_TABLE_CUSTOM=y
-CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="partitions_16mb.csv"
-CONFIG_PARTITION_TABLE_FILENAME="partitions_16mb.csv"
