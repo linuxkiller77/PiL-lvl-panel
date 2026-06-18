@@ -3,30 +3,30 @@ name: Build 8MB Flash Variant
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
+    paths:
+      - '**.c'
+      - '**.cpp'
+      - '**.h'
+      - '**.hpp'
+      - 'CMakeLists.txt'
+      - 'sdkconfig.defaults.8mb'
+      - 'partitions_8mb.csv'
+      - '.github/workflows/build-8mb.yml'
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
-  build-8mb:
-    name: Build 8MB Firmware
-    runs-on: ubuntu-latest
-    timeout-minutes: 45
+  build:
+    runs-on: ubuntu-22.04
+    name: ESP-IDF Build (8MB)
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           submodules: recursive
-
-      - name: Set up ESP-IDF
-        uses: espressif/esp-idf-ci-action@v1
-        with:
-          esp_idf_version: v6.0
-          target: esp32s3
 
       - name: Build web editor
         working-directory: panel_web
@@ -35,19 +35,29 @@ jobs:
           npm run build
           npm run embed
 
-      - name: Build 8MB firmware
-        run: |
-          idf.py -B build_8mb -DPILAB_FLASH_SIZE=8MB build
+      - name: Build with ESP-IDF Docker (v6.0.1)
+        uses: espressif/esp-idf-ci-action@v1
+        with:
+          esp_idf_version: v6.0.1
+          target: esp32s3
+          command: |
+            cp sdkconfig.defaults.8mb sdkconfig.defaults
+            rm -f sdkconfig
+            idf.py fullclean
+            idf.py -DPILAB_FLASH_SIZE=8MB build
+
+      - name: Install esptool
+        run: pip install esptool
 
       - name: Upload 8MB firmware artifacts
         uses: actions/upload-artifact@v4
         with:
           name: pilab-panel-8mb-firmware
           path: |
-            build_8mb/*.bin
-            build_8mb/*.elf
-            build_8mb/flash_args
-            build_8mb/flash_project_args
+            build/*.bin
+            build/*.elf
+            build/flash_args
+            build/flash_project_args
           retention-days: 30
 
       - name: Upload 8MB build info
@@ -55,54 +65,18 @@ jobs:
         with:
           name: pilab-panel-8mb-build-info
           path: |
-            build_8mb/config/sdkconfig
-            build_8mb/project_description.json
+            build/config/sdkconfig
+            build/project_description.json
           retention-days: 30
 
-  build-16mb:
-    name: Build 16MB Firmware
-    runs-on: ubuntu-latest
-    timeout-minutes: 45
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Create release (on tag)
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
         with:
-          submodules: recursive
-
-      - name: Set up ESP-IDF
-        uses: espressif/esp-idf-ci-action@v1
-        with:
-          esp_idf_version: v6.0
-          target: esp32s3
-
-      - name: Build web editor
-        working-directory: panel_web
-        run: |
-          npm install
-          npm run build
-          npm run embed
-
-      - name: Build 16MB firmware
-        run: |
-          idf.py -B build_16mb -DPILAB_FLASH_SIZE=16MB build
-
-      - name: Upload 16MB firmware artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: pilab-panel-16mb-firmware
-          path: |
-            build_16mb/*.bin
-            build_16mb/*.elf
-            build_16mb/flash_args
-            build_16mb/flash_project_args
-          retention-days: 30
-
-      - name: Upload 16MB build info
-        uses: actions/upload-artifact@v4
-        with:
-          name: pilab-panel-16mb-build-info
-          path: |
-            build_16mb/config/sdkconfig
-            build_16mb/project_description.json
-          retention-days: 30
+          files: |
+            build/*.bin
+            build/flash_args
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
