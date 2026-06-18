@@ -25,7 +25,7 @@ jobs:
       - name: Set up ESP-IDF
         uses: espressif/esp-idf-ci-action@v1
         with:
-          esp_idf_version: v5.3.1
+          esp_idf_version: v6.0
           target: esp32s3
 
       - name: Build web editor
@@ -73,7 +73,7 @@ jobs:
       - name: Set up ESP-IDF
         uses: espressif/esp-idf-ci-action@v1
         with:
-          esp_idf_version: v5.3.1
+          esp_idf_version: v6.0
           target: esp32s3
 
       - name: Build web editor
