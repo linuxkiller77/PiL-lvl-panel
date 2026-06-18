@@ -14,7 +14,7 @@ jobs:
   build-8mb:
     name: Build 8MB Firmware
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
 
     steps:
       - name: Checkout repository
@@ -26,6 +26,7 @@ jobs:
         uses: espressif/esp-idf-ci-action@v1
         with:
           esp_idf_version: v5.3.1
+          target: esp32s3
 
       - name: Build web editor
         working-directory: panel_web
@@ -61,7 +62,7 @@ jobs:
   build-16mb:
     name: Build 16MB Firmware
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
 
     steps:
       - name: Checkout repository
@@ -73,6 +74,7 @@ jobs:
         uses: espressif/esp-idf-ci-action@v1
         with:
           esp_idf_version: v5.3.1
+          target: esp32s3
 
       - name: Build web editor
         working-directory: panel_web
